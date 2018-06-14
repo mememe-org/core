@@ -1,0 +1,17 @@
+{
+  "name": "mememe",
+  "version": "1.0.0",
+  "description": "generate meme from yaml",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": ["meme", "yaml", "generate"],
+  "author": "peawyoyoyin",
+  "license": "ISC",
+  "dependencies": {
+    "canvas": "^1.6.11",
+    "deep-assign": "^2.0.0",
+    "js-yaml": "^3.12.0"
+  }
+}

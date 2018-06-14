@@ -1,0 +1,27 @@
+background: one-does-not-simply.png
+top text:
+  text: One does not simply
+  upper: true
+  style:
+    align: center
+    font: bold 50px Impact
+    color: "#fff"
+    stroke:
+      width: 5
+      color: "#000"
+  location:
+    x: 284
+    y: 58
+bottom text:
+  text: Bottom Text
+  upper: true
+  style:
+    align: center
+    font: bold 50px Impact
+    color: "#fff"
+    stroke:
+      width: 5
+      color: "#000"
+  location:
+    x: 284
+    y: 315

@@ -1,0 +1,27 @@
+background: bad-luck-brian.png
+top text:
+  text: top text
+  upper: true
+  style:
+    align: center
+    font: 60px Impact
+    color: "#fff"
+    stroke:
+      width: 5
+      color: "#000"
+  location:
+    x: 300
+    y: 80
+bottom text:
+  text: bottom text
+  upper: true
+  style:
+    align: center
+    font: 60px Impact
+    color: "#fff"
+    stroke:
+      width: 5px
+      color: "#000"
+  location: 
+    x: 300
+    y: 690
