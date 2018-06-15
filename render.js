@@ -2,8 +2,9 @@ const fs = require('fs')
 const Canvas = require('canvas')
 const path = require('path')
 
-const renderTextComponent = (ctx, component) => {
+const renderTextComponent = (canvas, component) => {
   const { text:_text, upper, style, location } = component
+  const ctx = canvas.getContext('2d')
   if(upper) {
     text = _text.toUpperCase()
   } else {
@@ -26,12 +27,12 @@ const renderTextComponent = (ctx, component) => {
   ctx.fillText(text || "", location.x, location.y)
 }
 
-const renderComponent = (ctx, component) => {
+const renderComponent = (canvas, component) => {
   if(component.location === undefined || component.location.x === undefined || component.location.y === undefined) {
     throw new Error('invalid component location specification')
   }
   if(component.text !== undefined) {
-    renderTextComponent(ctx, component)
+    renderTextComponent(canvas, component)
   }
 }
 
@@ -53,7 +54,7 @@ const renderBackground = (spec, canvas) => {
   })
 }
 
-const render = (spec, target="out.png") => {
+const render = async (spec, canvas) => {
   // resolve background
   if(spec.background === undefined) {
     throw new Error('spec object has no background field.')
@@ -61,20 +62,19 @@ const render = (spec, target="out.png") => {
   const bg = new Canvas.Image()
   console.log(`reading ${spec.background}...`)
   const bgData = fs.readFileSync(spec.background)
-  const canvas = new Canvas()
-  renderBackground(spec, canvas)
-    .then(() => {
-      const ctx = canvas.getContext('2d')
-      // render each other component in spec
-      const clone = { ...spec }
-      delete clone.background
-      
-      // console.log(Object.values(clone))
-      Object.values(clone).forEach(component => renderComponent(ctx, component))
-      // save
-      fs.writeFileSync(target, canvas.toBuffer())
-    })
-    .catch(console.error)
+
+  try {
+    await renderBackground(spec, canvas)
+  } catch (e) {
+    throw e
+  }
+  // render each other component in spec
+  const clone = { ...spec }
+  delete clone.background
+  // console.log(Object.values(clone))
+  Object.values(clone).forEach(component => renderComponent(canvas, component))
+
+  return canvas
 }
 
 module.exports = {
