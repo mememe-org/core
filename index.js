@@ -15,12 +15,3 @@ try {
 } catch (error) {
   console.log(error)
 }
-
-// try {
-//   const meme2 = yaml.safeLoad(fs.readFileSync('tests/meme2.yaml', 'utf8'))
-//   const resolved2 = resolve(meme2)
-//   console.log('resolved: ',resolved2)
-//   render(resolved2, 'out2.png')
-// } catch (error) {
-//   console.log(error)
-// }
