@@ -56,18 +56,16 @@ const renderBackground = (background, canvas) => {
 
 const render = async (spec, canvas) => {
   const { background, ...components } = spec
-  
   if(background === undefined) {
     throw new Error('spec object has no background field.')
   }
-
+  
   try {
     await renderBackground(background, canvas)
   } catch (e) {
     throw e
   }
-  // render each other component in spec
-  // console.log(Object.values(clone))
+
   Object.values(components).forEach(component => renderComponent(canvas, component))
 
   return canvas
