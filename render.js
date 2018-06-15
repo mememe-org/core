@@ -36,14 +36,14 @@ const renderComponent = (canvas, component) => {
   }
 }
 
-const renderBackground = (spec, canvas) => {
+const renderBackground = (background, canvas) => {
   return new Promise((resolve) => {
     const bg = new Canvas.Image()
-    console.log(`reading ${spec.background}...`)
-    const bgData = fs.readFileSync(spec.background)
+    console.log(`reading ${background}...`)
+    const bgData = fs.readFileSync(background)
     
     bg.onload = () => {
-      console.log(`loaded ${spec.background}`)
+      console.log(`loaded ${background}`)
       canvas.width = bg.width
       canvas.height = bg.height
       const ctx = canvas.getContext('2d')
@@ -55,21 +55,20 @@ const renderBackground = (spec, canvas) => {
 }
 
 const render = async (spec, canvas) => {
-  // resolve background
-  if(spec.background === undefined) {
+  const { background, ...components } = spec
+  
+  if(background === undefined) {
     throw new Error('spec object has no background field.')
   }
-  
+
   try {
-    await renderBackground(spec, canvas)
+    await renderBackground(background, canvas)
   } catch (e) {
     throw e
   }
   // render each other component in spec
-  const clone = { ...spec }
-  delete clone.background
   // console.log(Object.values(clone))
-  Object.values(clone).forEach(component => renderComponent(canvas, component))
+  Object.values(components).forEach(component => renderComponent(canvas, component))
 
   return canvas
 }
