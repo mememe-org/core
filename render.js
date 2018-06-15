@@ -2,10 +2,6 @@ const fs = require('fs')
 const canvas = require('canvas')
 const path = require('path')
 
-const resolveImagePath = (imageName) => {
-  return path.join('images', imageName)
-}
-
 const renderTextComponent = (ctx, component) => {
   const { text:_text, upper, style, location } = component
   if(upper) {
@@ -44,12 +40,12 @@ const render = (spec, target="out.png") => {
   if(spec.background === undefined) {
     throw new Error('spec object has no background field.')
   }
-  const imgPath = resolveImagePath(spec.background)
   const bg = new canvas.Image()
-  console.log(`reading ${imgPath}...`)
-  const bgData = fs.readFileSync(imgPath)
+  console.log(`reading ${spec.background}...`)
+  const bgData = fs.readFileSync(spec.background)
+  
   bg.onload = () => {
-    console.log(`loaded ${imgPath}`)
+    console.log(`loaded ${spec.background}`)
     const cnv = new canvas(bg.width, bg.height)
     const ctx = cnv.getContext('2d')
     ctx.drawImage(bg, 0, 0)
@@ -57,7 +53,7 @@ const render = (spec, target="out.png") => {
     const clone = { ...spec }
     delete clone.background
     
-    console.log(Object.values(clone))
+    // console.log(Object.values(clone))
     Object.values(clone).forEach(component => renderComponent(ctx, component))
     // save
     fs.writeFileSync(target, cnv.toBuffer())
