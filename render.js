@@ -59,10 +59,7 @@ const render = async (spec, canvas) => {
   if(spec.background === undefined) {
     throw new Error('spec object has no background field.')
   }
-  const bg = new Canvas.Image()
-  console.log(`reading ${spec.background}...`)
-  const bgData = fs.readFileSync(spec.background)
-
+  
   try {
     await renderBackground(spec, canvas)
   } catch (e) {
