@@ -1,5 +1,5 @@
 const fs = require('fs')
-const canvas = require('canvas')
+const Canvas = require('canvas')
 const path = require('path')
 
 const renderTextComponent = (ctx, component) => {
@@ -35,30 +35,46 @@ const renderComponent = (ctx, component) => {
   }
 }
 
+const renderBackground = (spec, canvas) => {
+  return new Promise((resolve) => {
+    const bg = new Canvas.Image()
+    console.log(`reading ${spec.background}...`)
+    const bgData = fs.readFileSync(spec.background)
+    
+    bg.onload = () => {
+      console.log(`loaded ${spec.background}`)
+      canvas.width = bg.width
+      canvas.height = bg.height
+      const ctx = canvas.getContext('2d')
+      ctx.drawImage(bg, 0, 0)
+      resolve(canvas)
+    }
+    bg.src = bgData
+  })
+}
+
 const render = (spec, target="out.png") => {
   // resolve background
   if(spec.background === undefined) {
     throw new Error('spec object has no background field.')
   }
-  const bg = new canvas.Image()
+  const bg = new Canvas.Image()
   console.log(`reading ${spec.background}...`)
   const bgData = fs.readFileSync(spec.background)
-  
-  bg.onload = () => {
-    console.log(`loaded ${spec.background}`)
-    const cnv = new canvas(bg.width, bg.height)
-    const ctx = cnv.getContext('2d')
-    ctx.drawImage(bg, 0, 0)
-    // render each other component in spec
-    const clone = { ...spec }
-    delete clone.background
-    
-    // console.log(Object.values(clone))
-    Object.values(clone).forEach(component => renderComponent(ctx, component))
-    // save
-    fs.writeFileSync(target, cnv.toBuffer())
-  }
-  bg.src = bgData
+  const canvas = new Canvas()
+  renderBackground(spec, canvas)
+    .then(() => {
+      const ctx = canvas.getContext('2d')
+      // render each other component in spec
+      const clone = { ...spec }
+      delete clone.background
+      
+      // console.log(Object.values(clone))
+      Object.values(clone).forEach(component => renderComponent(ctx, component))
+      // save
+      fs.writeFileSync(target, canvas.toBuffer())
+    })
+    .catch(console.error)
 }
 
 module.exports = {
