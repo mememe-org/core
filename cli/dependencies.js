@@ -25,12 +25,17 @@ exports.pullTemplate = (templateId) => {
 
     const [username, templateName] = templateId.split('/')
     
-    const targetFolder = path.join(config.templatesPath, username)
-    if(!fs.existsSync(targetFolder)) {
-      fs.mkdirSync(targetFolder)
+    if(!fs.existsSync(config.templatesPath)) {
+      const mkdirp = require('mkdirp')
+      mkdirp(config.templatesPath, () => {
+        const targetFolder = path.join(config.templatesPath, username)
+        if(!fs.existsSync(targetFolder)) {
+          fs.mkdirSync(targetFolder)
+        }
+        fs.writeFileSync(path.join(targetFolder, `${templateName}.yaml`), template)    
+      })
     }
-    fs.writeFileSync(path.join(targetFolder, `${templateName}.yaml`), template)
-
+    
     return body
   })
 }

@@ -3,5 +3,5 @@ const path = require('path')
 
 module.exports = {
   templatesPath: path.join(homedir(), '.mememe/templates'),
-  hubURL: 'http://localhost:3000'
+  hubURL: 'http://meme.connek.tk'
 }
