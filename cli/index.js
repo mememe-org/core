@@ -9,7 +9,7 @@ program.command('install')
     console.log('issuing install')
   })
 
-program.command('pugsh')
+program.command('push')
   .action(() => {
     console.log('issuing push')
   })

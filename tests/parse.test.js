@@ -1,5 +1,5 @@
 const assert = require('assert')
-const { loadSpec } = require('../renderer/resolve')
+const { loadSpec } = require('../renderer/parse')
 
 try {
   loadSpec({})
