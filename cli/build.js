@@ -14,7 +14,7 @@ const build = async (filename, output) => {
 
   // render the template
   const canvas = Canvas.createCanvas()
-  await renderer.render(yaml.safeLoad(fs.readFileSync(filename)), canvas, dependencies.resolveTemplate)
+  await renderer.render(yaml.safeLoad(fs.readFileSync(filename)), canvas, dependencies.resolveTemplate, Canvas.loadImage)
 
   const outputPath = path.join(process.cwd(), output || 'meme.png')
   console.log(`output is at ${outputPath}`)

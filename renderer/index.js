@@ -7,5 +7,5 @@ const { render } = require('./render')
  * resolveTemplate: function (templateId) => Object of meme configuration
 */
 module.exports = {
-  render: (spec, canvas, resolveTemplate) => render(loadSpec(spec, resolveTemplate), canvas),
+  render: (spec, canvas, resolveTemplate, loadImageFn) => render(loadSpec(spec, resolveTemplate), canvas, loadImageFn),
 }
