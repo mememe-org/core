@@ -70,5 +70,5 @@ const loadSpec = (spec, resolveTemplate = resolveTemplateFn) => {
 }
 
 module.exports = {
-  loadSpec,
+  loadSpec
 }

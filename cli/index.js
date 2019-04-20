@@ -1,22 +1,25 @@
 const program = require('commander')
 
 const build = require('./build')
+const push = require('./push')
+const pull = require('./dependencies').pullTemplate
+const install = require('./install')
 
 program.version('0.55555.55555555')
 
-program.command('install')
-  .action(() => {
-    console.log('issuing install')
+program.command('install <filename>')
+  .action((filename) => {
+    install(filename)
   })
 
-program.command('pugsh')
-  .action(() => {
-    console.log('issuing push')
+program.command('push <filename> <username> [templateID]')
+  .action((filename, username, templateID) => {
+    push(filename, username, templateID)
   })
 
-program.command('pull')
-  .action(() => {
-    console.log('issuing pull')
+program.command('pull <templateID>')
+  .action((templateID) => {
+    pull(templateID)
   })
 
 program.command('build <filename> [output]')
