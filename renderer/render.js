@@ -46,7 +46,13 @@ const renderImageElement = (element, canvas) => {
       }, Promise.resolve(data))
     )
     .then(transformedImage => {
-      ctx.drawImage(transformedImage, position.x, position.y, size.width, size.height)
+      ctx.drawImage(
+        transformedImage,
+        position.x,
+        position.y,
+        size.width || transformedImage.naturalWidth,
+        size.height || transformedImage.naturalHeight
+      )
     })
 }
 
