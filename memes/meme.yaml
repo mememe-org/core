@@ -1,3 +1,5 @@
 from: bad-luck-brian
-top text: Has a pet
-bottom text: It ran away
+top text:
+  text: has a pet
+bottom text:
+  text: It ran away
