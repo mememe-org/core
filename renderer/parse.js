@@ -1,11 +1,5 @@
-const fs = require('fs')
-const yaml = require('js-yaml')
 const merge = require('lodash.merge')
 const { DEFAULT_TEXT, DEFAULT_IMAGE } = require('./defaults')
-
-const resolveTemplateFn = (templateId) => {
-  return yaml.safeLoad( fs.readFileSync(`templates/${templateId}.yaml`) )
-}
 
 const resolve = (spec, resolveTemplate) => {
   if(spec.from !== undefined) {
@@ -18,7 +12,7 @@ const resolve = (spec, resolveTemplate) => {
   }
 }
 
-const loadSpec = (spec, resolveTemplate = resolveTemplateFn) => {
+const loadSpec = (spec, resolveTemplate) => {
   const resolvedSpec = resolve(spec, resolveTemplate)
   if (resolvedSpec.version === undefined) {
     resolvedSpec.version = 'latest'

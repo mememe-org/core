@@ -1,7 +1,7 @@
-const fs = require('fs')
 const { loadImage } = require('canvas')
-const path = require('path')
 const { LATEST_VERSION } = require('./defaults')
+const textTransformers = require('../transformers/text')
+const imageTransformers = require('../transformers/image')
 
 const renderTextElement = (element, canvas) => {
   return new Promise(resolve => {
@@ -12,12 +12,20 @@ const renderTextElement = (element, canvas) => {
     ctx.textBaseline = textBaseline
     ctx.direction = direction
     ctx.fillStyle = color
-    ctx.fillText(text, position.x, position.y)
+
+    const transformedText = transform.reduce((prev, method) => {
+      if (textTransformers[method] !== undefined) {
+        return textTransformers[method](prev)
+      }
+      return prev
+    }, text)
+
+    ctx.fillText(transformedText, position.x, position.y)
 
     if (stroke !== undefined) {
       ctx.lineWidth = stroke.width
       ctx.strokeStyle = stroke.color
-      ctx.strokeText(text, position.x, position.y)
+      ctx.strokeText(transformedText, position.x, position.y)
     }
     resolve()
   })
@@ -27,8 +35,15 @@ const renderImageElement = (element, canvas) => {
   const { image, transform, position } = element
   const ctx = canvas.getContext('2d')
   return loadImage(image)
-    .then(data => {
-      ctx.drawImage(data, position.x, position.y)
+    .then(data => transform
+      .reduce((prev, method) => {
+        if (imageTransformers[method] !== undefined) {
+          return prev.then((result) => imageTransformers[method](result))
+        }
+      }, Promise.resolve(data))
+    )
+    .then(transformedImage => {
+      ctx.drawImage(transformedImage, position.x, position.y)
     })
 }
 
