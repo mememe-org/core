@@ -30,13 +30,13 @@ const renderTextElement = (element, canvas) => {
   })
 }
 
-const renderImageElement = (element, canvas, loadImageFn) => {
+const renderImageElement = (element, canvas, loadImage) => {
   const { image, transform, position, size } = element
   const ctx = canvas.getContext('2d')
   if (image === '') {
     return Promise.resolve()
   }
-  return loadImageFn(image)
+  return loadImage(image)
     .then(data => transform
       .reduce((prev, method) => {
         if (imageTransformers[method] !== undefined) {
@@ -55,7 +55,7 @@ const renderImageElement = (element, canvas, loadImageFn) => {
     })
 }
 
-const render = (spec, canvas, loadImageFn) => {
+const render = (spec, canvas, loadImage) => {
   const { version, size, ...elements } = spec
   if (version === 'latest' || version === LATEST_VERSION) {
     canvas.width = size.width
@@ -76,7 +76,7 @@ const render = (spec, canvas, loadImageFn) => {
           return prev.then(() => renderTextElement(element, canvas))
         }
         if (element.type === 'image') {
-          return prev.then(() => renderImageElement(element, canvas, loadImageFn))
+          return prev.then(() => renderImageElement(element, canvas, loadImage))
         }
         return prev
       }, Promise.resolve())
