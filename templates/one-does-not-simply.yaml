@@ -7,11 +7,9 @@ background:
     z: 0
 top text:
   text: One does not simply
-  style:
-    textTransform: uppercase
-    textAlign: center
-    font: bold 50px Impact
-    color: white
+  textAlign: center
+  font: bold 50px Impact
+  color: white
   stroke:
     width: 5
     color: black
@@ -21,14 +19,12 @@ top text:
     z: 1
 bottom text:
   text: Bottom Text
-  style:
-    textTransform: uppercase
-    textAlign: center
-    font: bold 50px Impact
-    color: white
-    stroke:
-      width: 5
-      color: black
+  textAlign: center
+  font: bold 50px Impact
+  color: white
+  stroke:
+    width: 5
+    color: black
   position:
     x: 284
     y: 315

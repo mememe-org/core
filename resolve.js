@@ -1,6 +1,6 @@
 const fs = require('fs')
 const yaml = require('js-yaml')
-const deepAssign = require('deep-assign')
+const deepAssign = require('lodash.merge')
 const { DEFAULT_TEXT, DEFAULT_IMAGE } = require('./defaults')
 
 const resolveTemplateFn = (templateId) => {
