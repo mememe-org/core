@@ -1,13 +1,13 @@
 const yaml = require('js-yaml')
 const fs = require('fs')
-const { createCanvas } = require('canvas')
+const { createCanvas, loadImage } = require('canvas')
 const { resolveTemplate } = require('./utils')
 const { render } = require('../renderer')
 
 try {
   const meme = yaml.safeLoad(fs.readFileSync('tests/memes/text-transforms.yaml', 'utf8'))
   const canvas = createCanvas()
-  render(meme, canvas, resolveTemplate)
+  render(meme, canvas, resolveTemplate, loadImage)
     .then(() => {
       fs.writeFileSync('out.png', canvas.toBuffer())
     })
