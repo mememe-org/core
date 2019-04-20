@@ -4,7 +4,8 @@
   "description": "generate meme from yaml",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "node tests/resolve.test.js"
   },
   "keywords": [
     "meme",
@@ -16,8 +17,10 @@
   "dependencies": {
     "@tensorflow/tfjs-node": "^1.1.0",
     "canvas": "^2.4.1",
-    "deep-assign": "^2.0.0",
+    "commander": "^2.20.0",
     "face-api.js": "^0.19.0",
-    "js-yaml": "^3.12.0"
+    "js-yaml": "^3.12.0",
+    "deep-assign": "^2.0.0",
+    "lodash.merge": "^4.6.1"
   }
 }
