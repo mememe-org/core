@@ -2,6 +2,50 @@ const { LATEST_VERSION } = require('./defaults')
 const textTransformers = require('../transformers/text')
 const imageTransformers = require('../transformers/image')
 
+/* Warning: this is not thoroughly tested */
+const createWordWrapper = (ctx) => {
+  return (text, maxWidth) => {
+    const result = text.split(' ')
+      .reduce(({ lines, currentLine }, word, idx) => {
+        const concatenatedLine = (idx === 0) ? word : currentLine.concat(' ', word)
+        const width = ctx.measureText(concatenatedLine).width
+        if (width < maxWidth) {
+          return {
+            lines,
+            currentLine: concatenatedLine,
+          }
+        }
+        return {
+          lines: lines.concat(currentLine ),
+          currentLine: word,
+        }
+      }, { lines: [], currentLine: '' })
+    return result.lines.concat(result.currentLine).join('\n')
+  }
+}
+
+/* Warning: this is not thoroughly tested */
+const calculateAvailableWidth = (totalWidth, textAlign, direction, horizontalPosition) => {
+  if (
+    textAlign === 'left' ||
+    (textAlign ==='start' && direction === 'ltr') ||
+    (textAlign ==='end' && direction === 'rtl')
+  ) {
+    return totalWidth - horizontalPosition
+  }
+  if (textAlign === 'center') {
+    return Math.min(horizontalPosition, totalWidth - horizontalPosition) * 2
+  }
+  if (
+    textAlign === 'right' ||
+    (textAlign ==='end' && direction === 'ltr') ||
+    (textAlign ==='start' && direction === 'rtl')
+  ) {
+    return horizontalPosition
+  }
+  return totalWidth
+}
+
 const renderTextElement = (element, canvas) => {
   return new Promise(resolve => {
     const { text, font, textAlign, textBaseline, direction, color, stroke, transform, position } = element
@@ -19,12 +63,17 @@ const renderTextElement = (element, canvas) => {
       return prev
     }, text)
 
-    ctx.fillText(transformedText, position.x, position.y)
+    const wrappedText = createWordWrapper(ctx)(
+      transformedText,
+      calculateAvailableWidth(canvas.width, textAlign, direction, position.x)
+    )
+
+    ctx.fillText(wrappedText, position.x, position.y)
 
     if (stroke !== undefined) {
       ctx.lineWidth = stroke.width
       ctx.strokeStyle = stroke.color
-      ctx.strokeText(transformedText, position.x, position.y)
+      ctx.strokeText(wrappedText, position.x, position.y)
     }
     resolve()
   })
