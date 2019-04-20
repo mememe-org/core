@@ -32,8 +32,11 @@ const renderTextElement = (element, canvas) => {
 }
 
 const renderImageElement = (element, canvas) => {
-  const { image, transform, position } = element
+  const { image, transform, position, size } = element
   const ctx = canvas.getContext('2d')
+  if (image === '') {
+    return Promise.resolve()
+  }
   return loadImage(image)
     .then(data => transform
       .reduce((prev, method) => {
@@ -43,7 +46,7 @@ const renderImageElement = (element, canvas) => {
       }, Promise.resolve(data))
     )
     .then(transformedImage => {
-      ctx.drawImage(transformedImage, position.x, position.y)
+      ctx.drawImage(transformedImage, position.x, position.y, size.width, size.height)
     })
 }
 

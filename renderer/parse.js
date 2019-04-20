@@ -46,8 +46,13 @@ const loadSpec = (spec, resolveTemplate) => {
         }
       }
       if (value.image !== undefined) {
+        const image = merge({}, DEFAULT_IMAGE, value)
+        if (typeof(image.size) === 'string') {
+          const [imageWidth, imageHeight] = image.size.split('x').map(Number)
+          image.size = { width: imageWidth, height: imageHeight }
+        }
         return {
-          [key]: merge({}, DEFAULT_IMAGE, value),
+          [key]: image,
         }
       }
     })

@@ -50,10 +50,6 @@ assert.deepStrictEqual(spec, {
     textBaseline: 'alphabetic',
     direction: 'ltr',
     color: 'white',
-    stroke: {
-      width: 5,
-      color: 'black',
-    },
     transform: [],
     position: {
       x: 0,
@@ -83,10 +79,6 @@ assert.deepStrictEqual(spec, {
     textBaseline: 'alphabetic',
     direction: 'ltr',
     color: 'white',
-    stroke: {
-      width: 5,
-      color: 'black',
-    },
     transform: [],
     position: {
       x: 0,
@@ -116,6 +108,39 @@ assert.deepStrictEqual(spec, {
       x: 0,
       y: 0,
       z: 0,
+    },
+    size: {
+      width: undefined,
+      height: undefined,
+    },
+  }
+})
+
+spec = loadSpec({
+  size: '100x200',
+  bar: {
+    image: 'http://some.url/image/path',
+    size: '30x40'
+  },
+})
+assert.deepStrictEqual(spec, {
+  version: 'latest',
+  size: {
+    width: 100,
+    height: 200,
+  },
+  bar: {
+    image: 'http://some.url/image/path',
+    type: 'image',
+    transform: [],
+    position: {
+      x: 0,
+      y: 0,
+      z: 0,
+    },
+    size: {
+      width: 30,
+      height: 40,
     },
   }
 })
@@ -142,10 +167,6 @@ assert.deepStrictEqual(spec, {
     textBaseline: 'alphabetic',
     direction: 'ltr',
     color: 'white',
-    stroke: {
-      width: 5,
-      color: 'black',
-    },
     transform: [],
     position: {
       x: 0,
@@ -162,6 +183,10 @@ assert.deepStrictEqual(spec, {
       y: 0,
       z: 0,
     },
+    size: {
+      width: undefined,
+      height: undefined,
+    },
   },
   baz: {
     text: 'Cwm fjord bank glyphs vext quiz',
@@ -171,10 +196,6 @@ assert.deepStrictEqual(spec, {
     textBaseline: 'alphabetic',
     direction: 'ltr',
     color: 'white',
-    stroke: {
-      width: 5,
-      color: 'black',
-    },
     transform: [],
     position: {
       x: 0,

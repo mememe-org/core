@@ -1,0 +1,20 @@
+size: 600x710
+background:
+  image: https://i.imgur.com/jUOj2YX.png
+  size: 300x355
+background2:
+  image: https://i.imgur.com/jUOj2YX.png
+  position:
+    x: 300
+  size: 300x355
+background3:
+  image: https://i.imgur.com/jUOj2YX.png
+  position:
+    y: 355
+  size: 300x355
+background4:
+  image: https://i.imgur.com/jUOj2YX.png
+  position:
+    x: 300
+    y: 355
+  size: 300x355
