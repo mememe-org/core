@@ -7,12 +7,9 @@ background:
     z: 0
 top text:
   text: top text
-  upper: true
-  style:
-    textTransform: uppercase
-    textAlign: center
-    font: bold 60px Impact
-    color: white
+  textAlign: center
+  font: bold 60px Impact
+  color: white
   stroke:
     width: 5
     color: black
@@ -21,14 +18,12 @@ top text:
     y: 80
 bottom text:
   text: bottom text
-  style:
-    textTransform: uppercase
-    textAlign: center
-    font: bold 60px Impact
-    color: white
-    stroke:
-      width: 5
-      color: black
+  textAlign: center
+  font: bold 60px Impact
+  color: white
+  stroke:
+    width: 5
+    color: black
   position:
     x: 300
     y: 690
