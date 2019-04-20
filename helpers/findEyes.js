@@ -1,6 +1,7 @@
 "use strict";
 exports.__esModule = true;
 
+const path = require('path')
 const faceapi = require('face-api.js');
 const commons = require('./commons');
 const { canvas, faceDetectionNet, faceDetectionOptions } = commons;
@@ -9,8 +10,8 @@ let is_init = false;
 async function init() {
     if (!is_init) {
         is_init = true;
-        await faceDetectionNet.loadFromDisk('./helpers/weights')
-        await faceapi.nets.faceLandmark68Net.loadFromDisk('./helpers/weights')
+        await faceDetectionNet.loadFromDisk(path.join(__dirname, './weights'))
+        await faceapi.nets.faceLandmark68Net.loadFromDisk(path.join(__dirname, './weights'))
     }
 }
 
