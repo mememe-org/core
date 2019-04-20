@@ -40,9 +40,9 @@ const renderImageElement = (element, canvas, loadImage) => {
     .then(data => transform
       .reduce((prev, method) => {
         if (imageTransformers[method] !== undefined) {
-          return prev.then((result) => imageTransformers[method](result))
+          return prev.then(({ data: prevData, context }) => imageTransformers[method](prevData, context))
         }
-      }, Promise.resolve(data))
+      }, Promise.resolve({ data, context: {} }))
     )
     .then(transformedImage => {
       ctx.drawImage(

@@ -4,17 +4,47 @@ if(process.env.IMAGE_TRANSFORMER_ENABLED) {
   const { sunGlasses: sunglasses, eyeBlock: eyeblock } = require('../helpers/sunGlasses');
 
   module.exports = {
-    hyperify: (image) => {
-      return findEyes.run(image)
-        .then(results => flareEyes(results, image))
+    hyperify: async (image, context = {}) => {
+      let { eyes } = context
+      if (eyes === undefined) {
+        eyes = await findEyes.run(image)
+      }
+      const data = await flareEyes(eyes, image)
+      return {
+        data,
+        context: {
+          ...context,
+          eyes,
+        },
+      }
     },
-    sunglasses: (image) => {
-      return findEyes.run(image)
-        .then(results => sunglasses(results, image))
+    sunglasses: async (image, context = {}) => {
+      let { eyes } = context
+      if (eyes === undefined) {
+        eyes = await findEyes.run(image)
+      }
+      const data = await sunglasses(eyes, image)
+      return {
+        data,
+        context: {
+          ...context,
+          eyes,
+        },
+      }
     },
-    eyeblock: (image) => {
-      return findEyes.run(image)
-        .then(results => eyeblock(results, image))
+    eyeblock: async (image, context = {}) => {
+      let { eyes } = context
+      if (eyes === undefined) {
+        eyes = await findEyes.run(image)
+      }
+      const data = await eyeblock(eyes, image)
+      return {
+        data,
+        context: {
+          ...context,
+          eyes,
+        },
+      }
     },
   }
 } else {
