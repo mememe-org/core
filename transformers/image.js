@@ -1,4 +1,4 @@
-if(process.env.IMAGE_TRANSFORMER_ENABLED) {
+if (process.env.IMAGE_TRANSFORMER_ENABLED) {
   const findEyes = require('../helpers/findEyes')
   const { flareEyes } = require('../helpers/flareEyes')
   const { sunGlasses: sunglasses, eyeBlock: eyeblock } = require('../helpers/sunGlasses');
