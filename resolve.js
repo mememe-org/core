@@ -7,7 +7,7 @@ const resolveTemplateFn = (templateId) => {
   return yaml.safeLoad( fs.readFileSync(`templates/${templateId}.yaml`) )
 }
 
-const resolve = (spec, resolveTemplate = resolveTemplateFn) => {
+const resolve = (spec, resolveTemplate) => {
   if(spec.from !== undefined) {
     templateId = spec.from
     delete spec.from
@@ -18,8 +18,8 @@ const resolve = (spec, resolveTemplate = resolveTemplateFn) => {
   }
 }
 
-const loadSpec = (spec) => {
-  const resolvedSpec = resolve(spec)
+const loadSpec = (spec, resolveTemplate = resolveTemplateFn) => {
+  const resolvedSpec = resolve(spec, resolveTemplate)
   if (resolvedSpec.version === undefined) {
     resolvedSpec.version = 'latest'
   }
