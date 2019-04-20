@@ -12,5 +12,6 @@ You might encounter a problem with `node-gyp` when trying to run `npm install`. 
 
 3. To generate a meme, run
 ```
-node index.js
+node index.js path/to/meme.yaml [path/to/output.png]
 ```
+If not specified, output path defaults to `out.png` in the active directory.
