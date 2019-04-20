@@ -4,7 +4,7 @@ const path = require('path')
 
 const Canvas = require('canvas')
 
-const mememe = require('../mememe')
+const renderer = require('../renderer')
 
 const dependencies = require('./dependencies')
 
@@ -14,7 +14,7 @@ const build = async (filename, output) => {
 
   // render the template
   const canvas = Canvas.createCanvas()
-  await mememe.render(yaml.safeLoad(fs.readFileSync(filename)), canvas, dependencies.resolveTemplate)
+  await renderer.render(yaml.safeLoad(fs.readFileSync(filename)), canvas, dependencies.resolveTemplate)
 
   const outputPath = path.join(process.cwd(), output || 'meme.png')
   console.log(`output is at ${outputPath}`)

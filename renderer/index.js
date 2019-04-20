@@ -1,5 +1,5 @@
-const { loadSpec } = require('./renderer/resolve')
-const { render } = require('./renderer/render')
+const { loadSpec } = require('./resolve')
+const { render } = require('./render')
 
 exports.render = (spec, canvas, resolveTemplate) => {
   const resolved = loadSpec(spec, resolveTemplate)
