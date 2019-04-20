@@ -20,6 +20,12 @@ async function run(img) {
         .withFaceLandmarks()
 
     return results.map((res) => {
+        const epsilon = 0.000001;
+        const left_dist = Math.abs(res.landmarks._positions[36]._x - res.landmarks._shift._x) + epsilon;
+        const right_dist = Math.abs(res.landmarks._shift._x + res.landmarks._imgDims._width - res.landmarks._positions[45]._x) + epsilon;
+        
+        const threshold = 0.70;
+        const orientation = (left_dist/right_dist < threshold) ? 1 : (left_dist/right_dist > 1/threshold) ? -1 : 0;
         return ({
             face: {
                 width: res.landmarks._imgDims._width,
@@ -27,6 +33,7 @@ async function run(img) {
                 shift_x: res.landmarks._shift._x,
                 shift_y: res.landmarks._shift._y
             },
+            orientation: orientation, // -1 left, 0 middle, 1 right
             left_eyes: res.landmarks._positions.slice(36, 42).reduce((acc, it) => {
                 return [acc[0] + it._x, acc[1] + it._y];
             }, [0, 0]).map((it) => it / 6),
