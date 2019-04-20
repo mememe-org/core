@@ -1,74 +1,62 @@
 const fs = require('fs')
-const Canvas = require('canvas')
+const { loadImage } = require('canvas')
 const path = require('path')
+const { LATEST_VERSION } = require('./defaults')
 
-const renderTextComponent = (canvas, component) => {
-  const { text:_text, upper, style, location } = component
+const renderTextElement = (element, canvas) => {
+  const { text, font, textAlign, textBaseline, direction, color, stroke, transform, position } = element
   const ctx = canvas.getContext('2d')
-  if(upper) {
-    text = _text.toUpperCase()
-  } else {
-    text = _text
+  ctx.font = font
+  ctx.textAlign = textAlign
+  ctx.textBaseline = textBaseline
+  ctx.direction = direction
+  ctx.fillStyle = color
+  ctx.fillText(text, position.x, position.y)
+
+  if (stroke !== undefined) {
+    ctx.lineWidth = stroke.width
+    ctx.strokeStyle = stroke.color
+    ctx.strokeText(text, position.x, position.y)
   }
-  if(style === undefined) {
-    ctx.textAlign = "left"
-    ctx.fillStyle = "#000"
-    ctx.font = "30px Arial"
-  } else {
-    ctx.textAlign = style.align
-    ctx.font = style.font
-    if(style.stroke !== undefined) {
-      ctx.strokeStyle = style.stroke.color || '#000',
-      ctx.lineWidth = style.stroke.width || 1
-      ctx.strokeText(text || "", location.x, location.y)
-    }
-    ctx.fillStyle = style.color || '#000'
-  }
-  ctx.fillText(text || "", location.x, location.y)
+  return Promise.resolve()
 }
 
-const renderComponent = (canvas, component) => {
-  if(component.location === undefined || component.location.x === undefined || component.location.y === undefined) {
-    throw new Error('invalid component location specification')
-  }
-  if(component.text !== undefined) {
-    renderTextComponent(canvas, component)
-  }
-}
-
-const renderBackground = (background, canvas) => {
-  return new Promise((resolve) => {
-    const bg = new Canvas.Image()
-    console.log(`reading ${background}...`)
-    const bgData = fs.readFileSync(background)
-    
-    bg.onload = () => {
-      console.log(`loaded ${background}`)
-      canvas.width = bg.width
-      canvas.height = bg.height
-      const ctx = canvas.getContext('2d')
-      ctx.drawImage(bg, 0, 0)
-      resolve(canvas)
-    }
-    bg.src = bgData
-  })
+const renderImageElement = (element, canvas) => {
+  const { image, transform, position } = element
+  const ctx = canvas.getContext('2d')
+  return loadImage(image)
+    .then(data => {
+      ctx.drawImage(data, position.x, position.y)
+    })
 }
 
 const render = async (spec, canvas) => {
-  const { background, ...components } = spec
-  if(background === undefined) {
-    throw new Error('spec object has no background field.')
-  }
-  
-  try {
-    await renderBackground(background, canvas)
-  } catch (e) {
-    throw e
-  }
+  const { version, size, ...elements } = spec
+  if (version === 'latest' || version === LATEST_VERSION) {
+    canvas.width = size.width
+    canvas.height = size.height
 
-  Object.values(components).forEach(component => renderComponent(canvas, component))
-
-  return canvas
+    await Promise.all(Object.values(elements)
+      .sort((a, b) => {
+        if (a.z < b.z) {
+          return -1
+        }
+        if (a.z === b.z) {
+          return 0
+        }
+        return 1
+      })
+      .map(value => {
+        if (value.type === 'text') {
+          return renderTextElement(value, canvas)
+        }
+        if (value.type === 'image') {
+          return renderImageElement(value, canvas)
+        }
+      }))
+    return canvas
+  }
+  throw new Error('Unsupported version')
 }
 
 module.exports = {

@@ -43,18 +43,18 @@ assert.deepStrictEqual(spec, {
     height: 200,
   },
   foo: {
-    type: 'text',
     text: 'The quick brown fox jumps over the lazy dog',
-    style: {
-      textAlign: 'center',
-      textTransform: 'uppercase',
-      font: '60px Impact',
-      color: 'white',
-    },
+    type: 'text',
+    font: '60px Impact',
+    textAlign: 'center',
+    textBaseline: 'alphabetic',
+    direction: 'ltr',
+    color: 'white',
     stroke: {
       width: 5,
       color: 'black',
     },
+    transform: [],
     position: {
       x: 0,
       y: 0,
@@ -76,18 +76,18 @@ assert.deepStrictEqual(spec, {
     height: 200,
   },
   foo: {
-    type: 'text',
     text: 'The quick brown fox jumps over the lazy dog',
-    style: {
-      textAlign: 'center',
-      textTransform: 'uppercase',
-      font: '60px Impact',
-      color: 'white',
-    },
+    type: 'text',
+    font: '60px Impact',
+    textAlign: 'center',
+    textBaseline: 'alphabetic',
+    direction: 'ltr',
+    color: 'white',
     stroke: {
       width: 5,
       color: 'black',
     },
+    transform: [],
     position: {
       x: 0,
       y: 0,
