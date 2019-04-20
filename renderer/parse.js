@@ -1,11 +1,11 @@
 const merge = require('lodash.merge')
 const { DEFAULT_TEXT, DEFAULT_IMAGE } = require('./defaults')
 
-const resolve = (spec, resolveTemplate) => {
+const resolveSpec = (spec, resolveTemplate) => {
   if(spec.from !== undefined) {
     templateId = spec.from
     delete spec.from
-    const merged = merge( {}, resolve(resolveTemplate(templateId)), spec )
+    const merged = merge( {}, resolveSpec(resolveTemplate(templateId), resolveTemplate), spec )
     return merged
   } else {
     return spec
@@ -13,7 +13,7 @@ const resolve = (spec, resolveTemplate) => {
 }
 
 const loadSpec = (spec, resolveTemplate) => {
-  const resolvedSpec = resolve(spec, resolveTemplate)
+  const resolvedSpec = resolveSpec(spec, resolveTemplate)
   if (resolvedSpec.version === undefined) {
     resolvedSpec.version = 'latest'
   }
