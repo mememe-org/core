@@ -15,3 +15,20 @@ try {
 } catch (error) {
   console.log(error)
 }
+
+const findEyes = require('./helpers/findEyes');
+
+(async () => {
+  try {
+    const meme = yaml.safeLoad(fs.readFileSync('tests/meme2.yaml', 'utf8'))
+    const resolved = resolve(meme)
+    // console.log('resolved: ',resolved)
+    const canvas = new Canvas()
+    render(resolved, canvas).then(() => {
+      fs.writeFileSync('out.png', canvas.toBuffer())
+    })
+    console.log(await findEyes.run_test());
+  } catch (error) {
+    console.log(error)
+  }
+})();
