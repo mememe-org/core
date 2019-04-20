@@ -1,6 +1,6 @@
 const fs = require('fs')
 const yaml = require('js-yaml')
-const deepAssign = require('lodash.merge')
+const merge = require('lodash.merge')
 const { DEFAULT_TEXT, DEFAULT_IMAGE } = require('./defaults')
 
 const resolveTemplateFn = (templateId) => {
@@ -11,8 +11,8 @@ const resolve = (spec, resolveTemplate = resolveTemplateFn) => {
   if(spec.from !== undefined) {
     templateId = spec.from
     delete spec.from
-    const merge = deepAssign( {}, resolve(resolveTemplate(templateId)), spec )
-    return merge
+    const merged = merge( {}, resolve(resolveTemplate(templateId)), spec )
+    return merged
   } else {
     return spec
   }
@@ -48,12 +48,12 @@ const loadSpec = (spec) => {
       }
       if (value.text !== undefined) {
         return {
-          [key]: deepAssign({}, DEFAULT_TEXT, value),
+          [key]: merge({}, DEFAULT_TEXT, value),
         }
       }
       if (value.image !== undefined) {
         return {
-          [key]: deepAssign({}, DEFAULT_IMAGE, value),
+          [key]: merge({}, DEFAULT_IMAGE, value),
         }
       }
     })

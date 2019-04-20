@@ -32,13 +32,13 @@ const renderImageElement = (element, canvas) => {
     })
 }
 
-const render = async (spec, canvas) => {
+const render = (spec, canvas) => {
   const { version, size, ...elements } = spec
   if (version === 'latest' || version === LATEST_VERSION) {
     canvas.width = size.width
     canvas.height = size.height
 
-    await Object.values(elements)
+    return Object.values(elements)
       .sort((a, b) => {
         if (a.z < b.z) {
           return -1
@@ -50,14 +50,13 @@ const render = async (spec, canvas) => {
       })
       .reduce((prev, element) => {
         if (element.type === 'text') {
-          return prev.then(renderTextElement(element, canvas))
+          return prev.then(() => renderTextElement(element, canvas))
         }
         if (element.type === 'image') {
-          return prev.then(renderImageElement(element, canvas))
+          return prev.then(() => renderImageElement(element, canvas))
         }
         return prev
       }, Promise.resolve())
-    return canvas
   }
   throw new Error('Unsupported version')
 }
