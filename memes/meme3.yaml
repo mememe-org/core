@@ -1,0 +1,8 @@
+from: one-does-not-simply
+background:
+  transform:
+    - hyperify
+bottom text:
+  text: Create a meme
+  transform:
+    - uppercase

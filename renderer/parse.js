@@ -1,5 +1,3 @@
-const fs = require('fs')
-const yaml = require('js-yaml')
 const merge = require('lodash.merge')
 const { DEFAULT_TEXT, DEFAULT_IMAGE } = require('./defaults')
 
