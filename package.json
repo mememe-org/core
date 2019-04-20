@@ -4,7 +4,8 @@
   "description": "generate meme from yaml",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "node tests/resolve.test.js"
   },
   "keywords": [
     "meme",
