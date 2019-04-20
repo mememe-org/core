@@ -2,11 +2,11 @@ const fs = require('fs')
 const yaml = require('js-yaml')
 const deepAssign = require('deep-assign')
 
-const resolveTemplate = (templateId) => {
+const resolveTemplateFn = (templateId) => {
   return yaml.safeLoad( fs.readFileSync(`templates/${templateId}.yaml`) )
 }
 
-const resolve = (spec) => {
+const resolve = (spec, resolveTemplate = resolveTemplateFn) => {
   if(spec.template !== undefined) {
     templateId = spec.template
     delete spec.template
