@@ -1,7 +1,7 @@
 const { loadImage } = require('canvas')
 const { LATEST_VERSION } = require('./defaults')
-const { uppercase } = require('../transformers/text')
-const { hyperify } = require('../transformers/image')
+const textTransformers = require('../transformers/text')
+const imageTransformers = require('../transformers/image')
 
 const renderTextElement = (element, canvas) => {
   return new Promise(resolve => {
@@ -14,8 +14,8 @@ const renderTextElement = (element, canvas) => {
     ctx.fillStyle = color
 
     const transformedText = transform.reduce((prev, method) => {
-      if (method === 'uppercase') {
-        return uppercase(prev)
+      if (textTransformers[method] !== undefined) {
+        return textTransformers[method](prev)
       }
       return prev
     }, text)
@@ -37,8 +37,8 @@ const renderImageElement = (element, canvas) => {
   return loadImage(image)
     .then(data => transform
       .reduce((prev, method) => {
-        if (method === 'hyperify') {
-          return prev.then((result) => hyperify(result))
+        if (imageTransformers[method] !== undefined) {
+          return prev.then((result) => imageTransformers[method](result))
         }
       }, Promise.resolve(data))
     )

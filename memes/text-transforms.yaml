@@ -1,0 +1,118 @@
+size: 600x600
+uppercase:
+  text: uppercase
+  textAlign: center
+  font: bold 16px Impact
+  color: white
+  stroke:
+    width: 2
+    color: black
+  position:
+    x: 300
+    y: 20
+  transform:
+    - uppercase
+lowercase:
+  text: LOWERCASE
+  textAlign: center
+  font: bold 16px Impact
+  color: white
+  stroke:
+    width: 2
+    color: black
+  position:
+    x: 300
+    y: 40
+  transform:
+    - lowercase
+randomcase:
+  text: randomcase
+  textAlign: center
+  font: bold 16px Impact
+  color: white
+  stroke:
+    width: 2
+    color: black
+  position:
+    x: 300
+    y: 60
+  transform:
+    - randomcase
+rot13:
+  text: rot13abcdefghijklmno
+  textAlign: center
+  font: bold 16px Impact
+  color: white
+  stroke:
+    width: 2
+    color: black
+  position:
+    x: 300
+    y: 80
+  transform:
+    - rot13
+piglatin:
+  text: quick brown fox jumps over the lazy dog
+  textAlign: center
+  font: bold 16px Impact
+  color: white
+  stroke:
+    width: 2
+    color: black
+  position:
+    x: 300
+    y: 100
+  transform:
+    - piglatin
+flip:
+  text: flipped text
+  textAlign: center
+  font: bold 16px Impact
+  color: white
+  stroke:
+    width: 2
+    color: black
+  position:
+    x: 300
+    y: 120
+  transform:
+    - flip
+mirror:
+  text: mirrored text
+  textAlign: center
+  font: bold 16px Impact
+  color: white
+  stroke:
+    width: 2
+    color: black
+  position:
+    x: 300
+    y: 140
+  transform:
+    - mirror
+creepify:
+  text: To invoke the hive-mind representing chaos
+  textAlign: center
+  font: bold 16px Impact
+  color: white
+  stroke:
+    width: 2
+    color: black
+  position:
+    x: 300
+    y: 180
+  transform:
+    - creepify
+dateformat:
+  text: "'The time is' dddd, mmmm dS, yyyy, h:MM:ss TT. 'Have a nice day!'"
+  textAlign: center
+  font: bold 16px Impact
+  color: white
+  stroke:
+    width: 2
+    color: black
+  position:
+    x: 300
+    y: 220
+  transform:
+    - dateformat
