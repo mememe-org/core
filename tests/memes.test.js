@@ -5,7 +5,7 @@ const { resolveTemplate } = require('./utils')
 const { render } = require('../renderer')
 
 try {
-  const meme = yaml.safeLoad(fs.readFileSync('memes/meme3.yaml', 'utf8'))
+  const meme = yaml.safeLoad(fs.readFileSync('tests/memes/meme3.yaml', 'utf8'))
   const canvas = createCanvas()
   render(meme, canvas, resolveTemplate)
     .then(() => {
