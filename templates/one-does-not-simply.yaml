@@ -1,27 +1,35 @@
-background: images/one-does-not-simply.png
+size: 568x335
+background:
+  image: https://i.imgur.com/j4KsaJ8.png
+  position:
+    x: 0
+    y: 0
+    z: 0
 top text:
   text: One does not simply
-  upper: true
   style:
-    align: center
+    textTransform: uppercase
+    textAlign: center
     font: bold 50px Impact
-    color: "#fff"
-    stroke:
-      width: 5
-      color: "#000"
-  location:
+    color: white
+  stroke:
+    width: 5
+    color: black
+  position:
     x: 284
     y: 58
+    z: 1
 bottom text:
   text: Bottom Text
-  upper: true
   style:
-    align: center
+    textTransform: uppercase
+    textAlign: center
     font: bold 50px Impact
-    color: "#fff"
+    color: white
     stroke:
       width: 5
-      color: "#000"
-  location:
+      color: black
+  position:
     x: 284
     y: 315
+    z: 1

@@ -3,15 +3,15 @@ const yaml = require('js-yaml')
 const deepAssign = require('deep-assign')
 const { DEFAULT_TEXT, DEFAULT_IMAGE } = require('./defaults')
 
-const loadTemplate = (templateId) => {
+const resolveTemplateFn = (templateId) => {
   return yaml.safeLoad( fs.readFileSync(`templates/${templateId}.yaml`) )
 }
 
-const resolve = (spec) => {
-  if (spec.from !== undefined) {
+const resolve = (spec, resolveTemplate = resolveTemplateFn) => {
+  if(spec.from !== undefined) {
     templateId = spec.from
     delete spec.from
-    const merge = deepAssign( {}, resolve(loadTemplate(templateId)), spec )
+    const merge = deepAssign( {}, resolve(resolveTemplate(templateId)), spec )
     return merge
   } else {
     return spec
