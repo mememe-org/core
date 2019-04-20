@@ -1,3 +1,7 @@
+const { homedir } = require('os')
+const path = require('path')
+
 module.exports = {
-  templatesPath: '/Users/piriyaponglaopongsit/stupidhackth3/templates', 
+  templatesPath: path.join(homedir(), '.mememe/templates'),
+  hubURL: 'http://meme.connek.tk'
 }

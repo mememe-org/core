@@ -4,6 +4,7 @@ const commons = require('./commons');
 const { canvas } = commons;
 const { Canvas, Image } = canvas;
 const fs = require('fs')
+const path = require('path')
 
 const MockResult = async (timeout) => (
     new Promise((res) => {
@@ -91,7 +92,7 @@ async function flareEyes(results, img) {
     try {
         // image is from canvas.loadImage
         const img_canvas = resize_image(img, 1);
-        const flare = await canvas.loadImage('./helpers/assets/glow2.png');
+        const flare = await canvas.loadImage(path.join(__dirname, './assets/glow2.png'));
 
         // Scale down factor
         const scale_factor = Math.max(flare.width / img.width, flare.height / img.height) * 1.5;

@@ -8,10 +8,10 @@ const DEFAULT_TEXT = {
   textBaseline: 'alphabetic',
   direction: 'ltr',
   color: 'white',
-  stroke: {
-    width: 5,
-    color: 'black',
-  },
+  // stroke: {
+  //   width: 5,
+  //   color: 'black',
+  // },
   transform: [],
   position: {
     x: 0,
@@ -28,6 +28,10 @@ const DEFAULT_IMAGE = {
     x: 0,
     y: 0,
     z: 0,
+  },
+  size: {
+    width: undefined,
+    height: undefined,
   },
 }
 

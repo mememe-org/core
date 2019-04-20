@@ -1,8 +1,11 @@
-const { loadSpec } = require('./resolve')
+const { loadSpec } = require('./parse')
 const { render } = require('./render')
 
-exports.render = (spec, canvas, resolveTemplate) => {
-  const resolved = loadSpec(spec, resolveTemplate)
- 
-  return render(resolved, canvas)
+/*
+ * spec: Object of meme configuration
+ * canvas: Canvas
+ * resolveTemplate: function (templateId) => Object of meme configuration
+*/
+module.exports = {
+  render: (spec, canvas, resolveTemplate) => render(loadSpec(spec, resolveTemplate), canvas),
 }
