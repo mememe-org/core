@@ -24,11 +24,12 @@ exports.pullTemplate = (templateId) => {
     const template = body
 
     const [username, templateName] = templateId.split('/')
-    
+
+    const targetFolder = path.join(config.templatesPath, username)
+
     if(!fs.existsSync(config.templatesPath)) {
       const mkdirp = require('mkdirp')
       mkdirp(config.templatesPath, () => {
-        const targetFolder = path.join(config.templatesPath, username)
         if(!fs.existsSync(targetFolder)) {
           fs.mkdirSync(targetFolder)
         }
@@ -36,20 +37,22 @@ exports.pullTemplate = (templateId) => {
       })
     }
     
-    return body
+    fs.writeFileSync(path.join(targetFolder, `${templateName}.yaml`), template)    
+    return template
   })
 }
 
 exports.resolveTemplate = (templateId) => {
-  if(!checkDependency(templateId)) {
-    throw new Error(`template ${templateId} not found. Try running: install or pull ${templateId}`)
-  }
   
-  if(templateId.indexOf('/') < 0) {
-    templateId = '_/' + templateId
-  }
+  if(!checkDependency(templateId)) {
+      throw new Error(`template ${templateId} not found. Try running: install or pull ${templateId}`)
+    }
+    
+    if(templateId.indexOf('/') < 0) {
+      templateId = '_/' + templateId
+    }
 
-  const templateLocation = path.join(config.templatesPath, `${templateId}.yaml`)
+    const templateLocation = path.join(config.templatesPath, `${templateId}.yaml`)
 
   return yaml.safeLoad( fs.readFileSync( templateLocation ))
 }
