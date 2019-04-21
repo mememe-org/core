@@ -1,7 +1,13 @@
 if (process.env.IMAGE_TRANSFORMER_ENABLED) {
   const findEyes = require('../helpers/findEyes')
   const { flareEyes } = require('../helpers/flareEyes')
-  const { sunGlasses: sunglasses, eyeBlock: eyeblock, addHat: addhat } = require('../helpers/sunGlasses');
+  const {
+    sunGlasses: sunglasses,
+    eyeBlock: eyeblock,
+    addHat: addhat,
+    addStupidHat: addstupidhat,
+    addBand: addband
+} = require('../helpers/sunGlasses');
 
   module.exports = {
     hyperify: async (image, context = {}) => {
@@ -52,6 +58,34 @@ if (process.env.IMAGE_TRANSFORMER_ENABLED) {
         eyes = await findEyes.run(image)
       }
       const data = await addhat(eyes, image)
+      return {
+        data,
+        context: {
+          ...context,
+          eyes,
+        },
+      }
+    },
+    addstupidhat: async (image, context = {}) => {
+      let { eyes } = context
+      if (eyes === undefined) {
+        eyes = await findEyes.run(image)
+      }
+      const data = await addstupidhat(eyes, image)
+      return {
+        data,
+        context: {
+          ...context,
+          eyes,
+        },
+      }
+    },
+    addband: async (image, context = {}) => {
+      let { eyes } = context
+      if (eyes === undefined) {
+        eyes = await findEyes.run(image)
+      }
+      const data = await addband(eyes, image)
       return {
         data,
         context: {
