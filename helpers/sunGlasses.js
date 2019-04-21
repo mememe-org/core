@@ -204,7 +204,14 @@ async function addHat(results, img) {
     return addHatObject(results, img, hat, loc, 0.5);
 }
 
+async function addStupidHat(results, img) {
+    const hat = await canvas.loadImage('./helpers/assets/stupid_hat.png');
+    const loc = [[110, 237], [428 - 110, 237]];
+    return addHatObject(results, img, hat, loc, 1.0);
+}
+
 exports.sunGlassesTest = sunGlassesTest;
 exports.sunGlasses = sunGlasses;
 exports.eyeBlock = eyeBlock;
 exports.addHat = addHat;
+exports.addStupidHat = addStupidHat;
