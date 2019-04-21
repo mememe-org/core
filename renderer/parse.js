@@ -3,7 +3,7 @@ const { DEFAULT_TEXT, DEFAULT_IMAGE } = require('./defaults')
 
 const resolveSpec = (spec, resolveTemplate) => {
   if(spec.from !== undefined) {
-    templateId = spec.from
+    const templateId = spec.from
     delete spec.from
     const merged = merge( {}, resolveSpec(resolveTemplate(templateId), resolveTemplate), spec )
     return merged
