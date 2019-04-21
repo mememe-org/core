@@ -3,7 +3,8 @@ exports.__esModule = true;
 const commons = require('./commons');
 const { canvas } = commons;
 const { Canvas, Image } = canvas;
-const fs = require('fs')
+const fs = require('fs');
+const path = require('path');
 
 const MockResult = async (timeout) => (
     new Promise((res) => {
@@ -188,26 +189,32 @@ async function addHatObject(results, img, object, loc, offsetRatio) {
 
 async function sunGlasses(results, img) {
     // Load image
-    const glasses = await canvas.loadImage('./helpers/assets/glasses_mid.png');
+    const glasses = await canvas.loadImage(path.join(__dirname, './assets/glasses_mid.png'));
     const eye_glasses_loc = [[205, 80], [634, 80]]
     return addEyeObject(results, img, glasses, eye_glasses_loc)
 }
 async function eyeBlock(results, img) {
-    const block = await canvas.loadImage('./helpers/assets/blackbox.png');
+    const block = await canvas.loadImage(path.join(__dirname, './assets/blackbox.png'));
     const loc = [[205, 80], [634, 80]]
     return addEyeObject(results, img, block, loc);
 }
 
 async function addHat(results, img) {
-    const hat = await canvas.loadImage('./helpers/assets/hat3.png');
+    const hat = await canvas.loadImage(path.join(__dirname, './assets/hat3.png'));
     const loc = [[237, 260], [577 - 237, 260]];
     return addHatObject(results, img, hat, loc, 0.5);
 }
 
 async function addStupidHat(results, img) {
-    const hat = await canvas.loadImage('./helpers/assets/stupid_hat.png');
+    const hat = await canvas.loadImage(path.join(__dirname, './assets/stupid_hat.png'));
     const loc = [[110, 237], [428 - 110, 237]];
     return addHatObject(results, img, hat, loc, 1.0);
+}
+
+async function addBand(results, img) {
+    const hat = await canvas.loadImage(path.join(__dirname, './assets/band.png'));
+    const loc = [[90, 94], [160, 110]];
+    return addHatObject(results, img, hat, loc, 0.35);
 }
 
 exports.sunGlassesTest = sunGlassesTest;
@@ -215,3 +222,4 @@ exports.sunGlasses = sunGlasses;
 exports.eyeBlock = eyeBlock;
 exports.addHat = addHat;
 exports.addStupidHat = addStupidHat;
+exports.addBand = addBand;
