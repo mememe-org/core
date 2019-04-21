@@ -40,7 +40,15 @@ async function run(img) {
             }, [0, 0]).map((it) => it / 6),
             right_eyes: res.landmarks._positions.slice(42, 48).reduce((acc, it) => {
                 return [acc[0] + it._x, acc[1] + it._y];
-            }, [0, 0]).map((it) => it / 6)
+            }, [0, 0]).map((it) => it / 6),
+            chin: [
+                res.landmarks._positions[8]._x,
+                res.landmarks._positions[8]._y
+            ],
+            nose: [
+                res.landmarks._positions[33]._x,
+                res.landmarks._positions[33]._y
+            ]
         })
     });
 }
